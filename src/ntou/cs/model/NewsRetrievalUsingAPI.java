@@ -92,7 +92,10 @@ public class NewsRetrievalUsingAPI {
 	public static void main(String args[]) {
 		try {
 			ArrayList<News> newsList = getNews(NewsRetrievalUsingAPI.SPORTS);
-			System.out.println("News List:\n" + newsList);
+			System.out.println("News List:");
+			for(News n : newsList){
+				System.out.println(n);
+			}
 		} catch (IOException e) {
 			System.err.println(e);
 		}
