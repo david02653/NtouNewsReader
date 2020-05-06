@@ -13,8 +13,9 @@
     <title>Title</title>
 </head>
 <body>
-    <div style="background-color: gray">
+    <div class="header">
         <h1>Taiwan News Reader</h1>
+        <h3>${requestScope.sub}</h3>
     </div>
 </body>
 </html>

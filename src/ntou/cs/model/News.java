@@ -67,7 +67,7 @@ public class News {
 
 	@Override
 	public String toString() {
-		return "News [author=" + author + ", title=" + title + ", description=" + description + ", url=" + url
-				+ ", imageUrl=" + imageUrl + ", urlToImage=" + urlToImage + ", publishedAt=" + publishedAt + "]";
+		return "News [\nauthor=" + author + ",\n title=" + title + ",\n description=" + description + ",\n url=" + url
+				+ ",\n imageUrl=" + imageUrl + ",\n urlToImage=" + urlToImage + ",\n publishedAt=" + publishedAt + "\n]";
 	}
 }

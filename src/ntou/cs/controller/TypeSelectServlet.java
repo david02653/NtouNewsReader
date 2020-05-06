@@ -19,6 +19,12 @@ public class TypeSelectServlet extends HttpServlet {
         // load in sport type of news
         ArrayList<News> list = (ArrayList<News>) getServletContext().getAttribute("sport");
         req.setAttribute("current", list);
+        req.setAttribute("sub", "SPORT NEWS");
+
+        System.out.println("add sport news into request attribute");
+        for(News n : list){
+            System.out.println(n);
+        }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("NewsDisplayFormat.jsp");
         dispatcher.forward(req, resp);
@@ -28,5 +34,32 @@ public class TypeSelectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
         // TODO : return selected type of news info
+        ArrayList<News> list = null;
+        String type = req.getParameter("type");
+
+        switch (type){
+            case "sport":
+                list = (ArrayList<News>) getServletContext().getAttribute("sport");
+                req.setAttribute("sub", "SPORT NEWS");
+                break;
+            case "business":
+                list = (ArrayList<News>) getServletContext().getAttribute("business");
+                req.setAttribute("sub", "BUSINESS NEWS");
+                break;
+            case "health":
+                list = (ArrayList<News>) getServletContext().getAttribute("health");
+                req.setAttribute("sub", "HEALTH NEWS");
+                break;
+            case "entertainment":
+                list = (ArrayList<News>) getServletContext().getAttribute("entertainment");
+                req.setAttribute("sub", "ENTERTAINMENT NEWS");
+                break;
+            default:
+                System.out.println("nothing match");
+        }
+        req.setAttribute("current", list);
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("NewsDisplayFormat.jsp");
+        dispatcher.forward(req, resp);
     }
 }
