@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class TypeSelectServlet extends HttpServlet {
         // load in sport type of news
         ArrayList<News> list = (ArrayList<News>) getServletContext().getAttribute("sport");
         req.setAttribute("current", list);
-        req.setAttribute("sub", "SPORT NEWS");
+        req.setAttribute("sub", "SPORT");
 
         System.out.println("add sport news into request attribute");
         for(News n : list){
@@ -33,26 +34,25 @@ public class TypeSelectServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doPost(req, resp);
-        // TODO : return selected type of news info
         ArrayList<News> list = null;
         String type = req.getParameter("type");
 
         switch (type){
             case "sport":
                 list = (ArrayList<News>) getServletContext().getAttribute("sport");
-                req.setAttribute("sub", "SPORT NEWS");
+                req.setAttribute("sub", "SPORT");
                 break;
             case "business":
                 list = (ArrayList<News>) getServletContext().getAttribute("business");
-                req.setAttribute("sub", "BUSINESS NEWS");
+                req.setAttribute("sub", "BUSINESS");
                 break;
             case "health":
                 list = (ArrayList<News>) getServletContext().getAttribute("health");
-                req.setAttribute("sub", "HEALTH NEWS");
+                req.setAttribute("sub", "HEALTH");
                 break;
             case "entertainment":
                 list = (ArrayList<News>) getServletContext().getAttribute("entertainment");
-                req.setAttribute("sub", "ENTERTAINMENT NEWS");
+                req.setAttribute("sub", "ENTERTAINMENT");
                 break;
             default:
                 System.out.println("nothing match");

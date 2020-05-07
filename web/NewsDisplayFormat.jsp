@@ -7,11 +7,56 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="news" class="ntou.cs.model.News"></jsp:useBean>
-<!-- TODO : display news with selected type of news -->
+<jsp:useBean id="news" class="ntou.cs.model.News" />
+<c:set var="temp" value="${sessionScope}"/>
 <html>
 <head>
     <title>Ntou News Reader</title>
+    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            let selected = "${requestScope.sub}";
+            let current = selected.toLowerCase();
+            console.table([selected, current]);
+            $("#log-area").append(window.localStorage.getItem("log"));
+
+            function checker(){
+                console.log("i say stop at " + $.now());
+            }
+            setInterval(checker, 10000);
+
+            $("div#news-area > div > a").click(function(){
+                console.log("clicked !");
+                console.log(this);
+                let cont = this;
+                let title = this.innerText;
+                title = title.replace("<h2>", "");
+                title = title.replace("</h2>", "");
+                console.log(title);
+                let link = "<a href='" + this.href + "' target='_blank'>" + title + "</a><hr class='nLine'>";
+                $("#log-area").append(link);
+                window.localStorage.setItem("")
+            });
+
+            $("#reload").click(function () {
+                console.log("reload button clicked !");
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/reload",
+                    data: {
+                        current: current,
+                    },
+                    success: function () {
+                        console.log("data reload success !!");
+                        window.location.reload();
+                    },
+                    error: function () {
+                        console.log("reload data from servlet failed !!");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <style>
     #main-block{
@@ -86,7 +131,7 @@
                             <a href="${news.urlToImage}" target="_blank">
                                 <img src="${news.urlToImage}" alt="" class="news" />
                             </a>
-                            <div style="padding-right: 30px">
+                            <div style="padding: 30px">
                                 <c:out value="${news.description}" default="" />
                                 <c:out value="${news.publishedAt}" default="" />
                                 <c:out value="${news.author}" default="" />
@@ -102,7 +147,12 @@
     <div id="info-area">
         <div class="info_block">
             history<hr>
+            <!--
             <h4 style="color: firebrick">NOT DONE YET</h4>
+            -->
+            <div id="log-area" style="font-size: 14px;">
+
+            </div>
         </div>
         <br>
         <div class="info_block">
@@ -113,9 +163,7 @@
         <br>
         <div class="info_block">
             Update News<hr>
-            <form method="post" action="">
-                <input type="submit" value="UPDATE">
-            </form>
+            <input id="reload" type="button" value="UPDATE">
         </div>
         <br>
         <div class="info_block">

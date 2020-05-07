@@ -13,6 +13,6 @@
 </head>
 <body>
     <h1>U got an error of ${pageContext.exception}</h1>
-    <img src="WEB-INF/switch.jpg" alt="">
+    <img src="switch.jpg" alt="">
 </body>
 </html>
