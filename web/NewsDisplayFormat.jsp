@@ -18,12 +18,17 @@
             let selected = "${requestScope.sub}";
             let current = selected.toLowerCase();
             console.table([selected, current]);
+            if(window.localStorage.getItem("log") === null){
+                window.localStorage.setItem("log", "");
+            }
             $("#log-area").append(window.localStorage.getItem("log"));
 
             function checker(){
-                console.log("i say stop at " + $.now());
+                //console.log("i say stop at " + $.now());
+                window.localStorage.clear();
+                window.location.reload();
             }
-            setInterval(checker, 10000);
+            setInterval(checker, 60000);
 
             $("div#news-area > div > a").click(function(){
                 console.log("clicked !");
@@ -34,8 +39,12 @@
                 title = title.replace("</h2>", "");
                 console.log(title);
                 let link = "<a href='" + this.href + "' target='_blank'>" + title + "</a><hr class='nLine'>";
-                $("#log-area").append(link);
-                window.localStorage.setItem("")
+
+                let rec = window.localStorage.getItem("log");
+                if(!String(rec).includes(title)){
+                    $("#log-area").append(link);
+                    window.localStorage.setItem("log", rec + link);
+                }
             });
 
             $("#reload").click(function () {
